@@ -5,8 +5,9 @@
     align-items: center;
     gap: 60px;
     background-color: var(--header-bg);
-
-
+    position: sticky;
+    top: 0;
+    
     .logo {
         color: var(--white);
     }

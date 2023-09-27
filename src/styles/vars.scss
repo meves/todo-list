@@ -1,11 +1,25 @@
 :root {
     --white: #fff;
-    --dark-blue: #041c50;
-    --light-blue: #11aabe;
-    --light-red: #cc9a9a;
+    --white-transparent: #ffffffe4;
 
-    --header-bg: var(--dark-blue);
+    --dark-blue: #041c50;
+    --blue: rgb(63, 63, 139);
+    --light-blue: #11aabe;
+    
+    --light-red: #cc9a9a;
+    --red: rgb(194, 31, 31);
+
+    --dark-grey: #363434;
+    --black: #000;
+    
+    --transparent-blue: #b1e0d395;
+    --transparent-dark-blue: #041c50de;
+
+    --header-bg: var(--transparent-dark-blue);
+    --main-bg: var(--transparent-blue);
     --link-color: var(--white);
     --link-hover-color: var(--light-blue);
     --link-active-color: var(--light-red);
+    --font-color: var(--dark-grey);
+    --error-color: var(--red);
 }
