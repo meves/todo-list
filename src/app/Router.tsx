@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ProjectsPage from "../pages/ProjectsPage";
-import TasksPage from "../pages/TasksPage"
+import TasksPage from "../pages/TasksPage/TasksPage"
 
 const AppRouter = () => {
     return (
