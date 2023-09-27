@@ -7,6 +7,8 @@ const rootReducer = combineReducers({
     modals: modalReducer
 })
 
-const store = createStore(rootReducer);
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+const store = createStore(rootReducer, composeEnhancers());
 
 export default store

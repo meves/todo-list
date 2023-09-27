@@ -1,17 +1,17 @@
 import React, { FC, ReactNode } from "react"
-import { useModal } from "../../libs/hooks/useModal"
+import { useModal } from "../../../libs/hooks/useModal"
 import { createPortal } from "react-dom"
-import styles from './Modal.module.scss'
-import { selectIsModalOpen } from "../../../store/reducers/modal-reducer"
-import { useSelector } from "react-redux"
+import styles from './ModalWrapper.module.scss'
 
 type ModalProps = {
     children: ReactNode
+    isModalOpen: boolean
 }
 
-export const Modal: FC<ModalProps> = ({children}) => {
-    const isModalOpen = useSelector(selectIsModalOpen)
-
+export const ModalWrapper: FC<ModalProps> = ({
+    children,
+    isModalOpen
+}) => {
     const {domElement} = useModal(isModalOpen)
     
     return (

@@ -1,8 +1,14 @@
-import { SET_MODAL_CLOSE, SET_MODAL_OPEN } from "../libs/constants"
+import { 
+    SET_CREATE_NEW_PROJECT_MODAL_CLOSE, 
+    SET_CREATE_NEW_PROJECT_MODAL_OPEN, 
+    SET_DELETE_PROJECT_MODAL_CLOSE, 
+    SET_DELETE_PROJECT_MODAL_OPEN
+} from "../libs/constants"
 import { InferActionsTypes, RootState } from "../libs/types"
 
 const initialState = {
-    isModalOpen: false
+    isCreateNewProjectModalOpen: false,
+    isDeleteProjectModalOpen: false
 }
 
 export type ModalState = typeof initialState
@@ -11,15 +17,25 @@ type Actions = InferActionsTypes<typeof actions>
 
 const modalReducer = (state=initialState, action: Actions): ModalState => {
     switch (action.type) {
-        case 'todo-list/modals/SET-MODAL-OPEN':
+        case SET_CREATE_NEW_PROJECT_MODAL_OPEN:
             return {
                 ...state,
-                isModalOpen: action.payload.isOpen
+                isCreateNewProjectModalOpen: action.payload.isOpen
             }
-        case 'todo-list/modals/SET-MODAL-CLOSE':
+        case SET_CREATE_NEW_PROJECT_MODAL_CLOSE:
             return {
                 ...state,
-                isModalOpen: action.payload.isOpen
+                isCreateNewProjectModalOpen: action.payload.isOpen
+            }
+        case SET_DELETE_PROJECT_MODAL_OPEN:
+            return {
+                ...state,
+                isDeleteProjectModalOpen: action.payload.isOpen
+            }
+        case SET_DELETE_PROJECT_MODAL_CLOSE:
+            return {
+                ...state,
+                isDeleteProjectModalOpen: action.payload.isOpen
             }
         default:
             return state
@@ -29,14 +45,27 @@ const modalReducer = (state=initialState, action: Actions): ModalState => {
 export default modalReducer
 
 const actions = {
-    setIsModalOpen () {
-        return {type: SET_MODAL_OPEN, payload: {isOpen: true}} as const
+    setIsCreateNewProjectModalOpen () {
+        return {type: SET_CREATE_NEW_PROJECT_MODAL_OPEN, payload: {isOpen: true}} as const
     },
-    setIsModalClose () {
-        return {type: SET_MODAL_CLOSE, payload: {isOpen: false}} as const
+    setIsCreateNewProjectModalClose () {
+        return {type: SET_CREATE_NEW_PROJECT_MODAL_CLOSE, payload: {isOpen: false}} as const
+    },
+    setIsDeleteProjectModalOpen () {
+        return {type: SET_DELETE_PROJECT_MODAL_OPEN, payload: {isOpen: true}} as const
+    },
+    setIsDeleteProjectModalClose () {
+        return {type: SET_DELETE_PROJECT_MODAL_CLOSE, payload: {isOpen: false}} as const
     }
 }
 
-export const { setIsModalOpen, setIsModalClose } = actions
+export const { 
+    setIsCreateNewProjectModalOpen, 
+    setIsCreateNewProjectModalClose,
+    setIsDeleteProjectModalOpen,
+    setIsDeleteProjectModalClose,
 
-export const selectIsModalOpen = (state: RootState) => state.modals.isModalOpen
+} = actions
+
+export const selectIsCreateNewProjectModalOpen = (state: RootState) => state.modals.isCreateNewProjectModalOpen
+export const selectIsDeleteProjectModalOpen = (state: RootState) => state.modals.isDeleteProjectModalOpen

@@ -1,16 +1,27 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../common/Button/Button";
 import styles from './Card.module.scss'
+import { Project } from "../../../store/libs/types";
+import { useDispatch } from "react-redux";
+import { setCurrentProjectId } from "../../../store/reducers/project-reducer";
+import { setIsDeleteProjectModalOpen } from "../../../store/reducers/modal-reducer";
 
 type ProjectCardProps = {
-    projectName: string
+    project: Project
 }
 
-export const ProjectCard: FC<ProjectCardProps> = ({projectName}) => {
+export const ProjectCard: FC<ProjectCardProps> = ({project}) => {
+    const dispatch = useDispatch()
+
+    const handleDeleteProjectOnClick = useCallback(() => {
+        dispatch(setIsDeleteProjectModalOpen())
+        dispatch(setCurrentProjectId(project.id))
+    }, [dispatch, project.id])
+
     return (
         <section className={styles.card}>
-            <h2 className={styles.title}>{projectName}</h2>
+            <h2 className={styles.title}>{project.projectName}</h2>
             <Link 
                 to="/tasks"
                 className={styles.link}    
@@ -22,7 +33,8 @@ export const ProjectCard: FC<ProjectCardProps> = ({projectName}) => {
                 />
                 <Button 
                     className={styles.button} 
-                    text="Delete project" 
+                    text="Delete project"
+                    onClick={handleDeleteProjectOnClick}
                 />
             </div>
         </section>

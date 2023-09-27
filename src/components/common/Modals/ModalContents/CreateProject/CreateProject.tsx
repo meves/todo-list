@@ -1,15 +1,15 @@
 import React, { ChangeEvent, useCallback, useState } from "react";
 import styles from './CreateProject.module.scss'
-import { Button } from "../../common/Button/Button";
-import { Error } from "../../common/Error/Error";
+import { Button } from "../../../Button/Button";
+import { Error } from "../../../Error/Error";
 import { useDispatch } from "react-redux";
-import { setIsModalClose } from "../../../store/reducers/modal-reducer";
-import { setNewProject } from "../../../store/reducers/project-reducer";
-import { createId } from "../../libs/utils/createId";
+import { setIsCreateNewProjectModalClose } from "../../../../../store/reducers/modal-reducer";
+import { setNewProject } from "../../../../../store/reducers/project-reducer";
+import { createId } from "../../../../libs/utils/createId";
 
-export const CreateProject = () => {
+export const CreateProjectModal = () => {
     const dispatch = useDispatch()
-
+    
     const [inputValue, setInputValue] = useState('')
     const [error, setError] = useState('')
 
@@ -19,7 +19,7 @@ export const CreateProject = () => {
     }, [])
 
     const closeModal = useCallback(() => {
-        dispatch(setIsModalClose())
+        dispatch(setIsCreateNewProjectModalClose())
         setInputValue('')
     }, [dispatch])
 
