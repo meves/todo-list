@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectModalOpen, setModalOpen } from "../store/reducers/modal-reducer";
 import { DeleteProjectModal } from "../components/common/Modals/ModalContents/DeleteProject/DeleteProject";
 import { CreateTaskModal } from "../components/common/Modals/ModalContents/CreateTask/CreateTask";
+import { NotDeleteProjectModal } from "../components/common/Modals/ModalContents/NotDeleteProject/NotDeleteProject";
 
 const ProjectsPage = () => {
     const dispatch = useDispatch()
@@ -17,7 +18,8 @@ const ProjectsPage = () => {
     const { 
         "create-project" : isCreateNewProjectModalOpen, 
         "delete-project" : isDeleteProjectModalOpen,
-        "create-task" : isCreateTaskModalOpen
+        "create-task" : isCreateTaskModalOpen,
+        "not-delete-project" : isNotDeleteProjectModalOpen
     } = useSelector(selectModalOpen)
     
     const handleAddNewProjectOnClick = useCallback(() => {
@@ -49,6 +51,11 @@ const ProjectsPage = () => {
         <ModalWrapper
             isModalOpen={isCreateTaskModalOpen}
         > <CreateTaskModal/>            
+        </ModalWrapper>
+
+        <ModalWrapper
+            isModalOpen={isNotDeleteProjectModalOpen}
+        ><NotDeleteProjectModal/>
         </ModalWrapper>
         </>
     )

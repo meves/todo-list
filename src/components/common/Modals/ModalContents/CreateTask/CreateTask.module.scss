@@ -1,0 +1,51 @@
+.wrapper {
+    width: 480px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    .form {
+        width: 100%;
+
+        .fieldset {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+            border: none;
+
+            .inputWrapper {
+                width: 100%;
+                
+                &:not(:last-child) {
+                    margin-bottom: 20px;;
+                }
+
+                .label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-size: 18px;
+                }
+
+                .input {
+                    width: 100%;
+                    height: 48px;
+                    padding: 12px 16px;
+                    color: var(--font-color);
+                    font-size: 18px;
+                    outline: none;
+                    border-radius: 10px;
+    
+                }
+            }
+
+        }
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .wrapper {
+        min-width: 340px;
+    }
+}

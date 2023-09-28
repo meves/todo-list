@@ -9,9 +9,20 @@ export const useGetProjects = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const savedProjects = getFromLocalStorage<Project[]>(PROJECTS)
+        const savedProjects: Project[] | null = getFromLocalStorage<Project[]>(PROJECTS)
         if (savedProjects) {
-            dispatch(setProjects(savedProjects))
+            const projects: Project[] = savedProjects.map(project => {
+                return {
+                    ...project,
+                    tasks: project.tasks?.map(task => {
+                        return {
+                            ...task,
+                            collapsed: true
+                        }
+                    })
+                }
+            })
+            dispatch(setProjects(projects))
         }
     }, [dispatch])
 }

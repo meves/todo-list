@@ -2,22 +2,22 @@ import React, { useCallback } from "react";
 import { Button } from "../../../Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalClose } from "../../../../../store/reducers/modal-reducer";
-import { deleteProject, selectCurrentProjectId, setCurrentProjectId } from "../../../../../store/reducers/project-reducer";
+import { deleteProject, selectCurrentProject, setCurrentProject } from "../../../../../store/reducers/project-reducer";
 import modalStyles from '../ModalContents.module.scss'
 import styles from './DeleteProject.module.scss'
 import classNames from "classnames";
 
 export const DeleteProjectModal = () => {
     const dispatch = useDispatch()
-    const currentProjectId = useSelector(selectCurrentProjectId)
+    const currentProject = useSelector(selectCurrentProject)
 
     const handleDeleteProjectOnClick = useCallback(() => {
-        if (currentProjectId) {
-            dispatch(deleteProject(currentProjectId))
-            dispatch(setCurrentProjectId(null))
+        if (currentProject) {
+            dispatch(deleteProject(currentProject.id))
+            dispatch(setCurrentProject(null))
         }
         dispatch(setModalClose('delete-project'))
-    }, [dispatch, currentProjectId])
+    }, [dispatch, currentProject])
     
     const handleCancelOnClick = useCallback(() => {
         dispatch(setModalClose('delete-project'))

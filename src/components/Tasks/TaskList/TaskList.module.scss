@@ -1,12 +1,16 @@
 .list {
     list-style-type: none;
     height: 100%;
-
+    
     .listItem {
-        padding: 0 20px;
+        max-height: auto;
+        position: relative;
+        padding: 0 20px 70px;
         border: 1px solid var(--black);
         border-radius: 10px;
         box-shadow: 2px 2px 2px var(--dark-grey);
+        transition: background-color 0.3s ease-in,
+            height 2s ease, overflow-y 2s ease;
 
         &:not(:first-child) {
             margin-top: 15px;
@@ -14,6 +18,61 @@
 
         &:hover {
             cursor: grab;
+            background-color: var(--white);
+        }
+
+        p {
+            font-size: 18px;
+            white-space: wrap;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 10px;
+
+            .button {
+                width: 100%;
+                padding: 10px auto;
+                border-radius: 10px;
+                color: var(--font-color);
+                font-size: 20px;                
+
+                &:hover {
+                    color: var(--white);
+                }
+
+                &:active {
+                    color: var(--dark-grey);
+                }
+            }
+        }
+
+        .roll {
+            width: 100%;
+            height: 50px;
+            outline: none;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0 0 10px 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--font-color);
+            text-transform: uppercase;
+
+            &:hover {
+                background-color: var(--blue);
+                color: var(--white);
+            }
         }
     }
+
 }

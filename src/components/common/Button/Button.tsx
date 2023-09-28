@@ -6,17 +6,20 @@ type ButtonProps = {
     text: string
     className?: string
     onClick?: () => void
+    type?: "button" | "submit" | "reset"
 }
 
 export const Button: FC<ButtonProps> = ({
     text, 
     className,
-    onClick
+    onClick,
+    type 
 }) => {
     return (
         <button     
             className={classNames(styles.button, className)}
-            onClick={onClick}    
+            onClick={onClick}
+            type={type}
         >{text}
         </button>
     )

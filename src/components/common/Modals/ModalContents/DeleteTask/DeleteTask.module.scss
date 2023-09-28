@@ -1,0 +1,12 @@
+.wrapper {
+    .text {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wrapper {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}

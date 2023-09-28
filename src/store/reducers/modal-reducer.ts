@@ -1,13 +1,13 @@
-import { 
-    SET_MODAL_OPEN, 
-    SET_MODAL_CLOSE,
-} from "../libs/constants"
+import { SET_MODAL_OPEN, SET_MODAL_CLOSE } from "../libs/constants"
 import { InferActionsTypes, ModalOpen, RootState } from "../libs/types"
 
 const initialState = {
     'create-project': false,
     'delete-project': false,
-    'create-task': false
+    'not-delete-project': false,
+    'create-task': false,
+    'delete-task': false,
+    'not-delete-task': false
 }
 
 export type ModalState = typeof initialState

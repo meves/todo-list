@@ -1,41 +1,46 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import modalStyles from '../ModalContents.module.scss'
 import styles from './CreateTask.module.scss'
 import classNames from "classnames";
 import { Button } from "../../../Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalClose } from "../../../../../store/reducers/modal-reducer";
-import { selectCurrentProjectId, setNewTask } from "../../../../../store/reducers/project-reducer";
-import { TaskPriorirty, TaskStatus } from "../../../../../store/libs/types";
+import { selectCurrentProject, setNewTask } from "../../../../../store/reducers/project-reducer";
+import { ProjectData, Task, TaskPriorirty, TaskStatus } from "../../../../../store/libs/types";
 import { useNavigate } from "react-router-dom";
 
 export const CreateTaskModal = () => {
     const dispatch = useDispatch()
-    const currentProjectId = useSelector(selectCurrentProjectId) as number
+    const currentProject = useSelector(selectCurrentProject) as ProjectData
     const navigate = useNavigate()
 
-    const [taskName, setTaskName] = useState('')
+    const [inputValue, setInputValue] = useState({title: '', description: '', endDate: '', files: []})
+    
     const handleTaskNameOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         const value = event.currentTarget.value
-        setTaskName(value)
+        const name = event.currentTarget.name
+        setInputValue(prev => ({...prev, [name]: value}))
     }, [])
 
-    const handleCreateTaskOnClick = useCallback(() => {
-        const newTask = {
-            projectId: currentProjectId,
+    const handleCreateTaskOnClick = useCallback((event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const newTask: Task = {
+            projectId: currentProject.id,
+            projectName: currentProject.projectName,
             taskId: Date.now(),
-            description: taskName,
+            title: inputValue.title,
+            description: inputValue.description,
             createdDate: new Date().toDateString(),
-            endDate: new Date().toDateString(),
-            timeInProgress: 123,
-            priority: 'middle' as TaskPriorirty, //
-            files: [], //
-            taskStatus: 'queue' as TaskStatus
+            endDate: inputValue.endDate,
+            priority: 'middle' as TaskPriorirty,
+            taskStatus: 'queue' as TaskStatus,
+            files: inputValue.files,
+            collapsed: true
         }
         dispatch(setNewTask(newTask))
         dispatch(setModalClose('create-task'))
         navigate('/tasks')
-    }, [dispatch, navigate, currentProjectId, taskName])
+    }, [dispatch, navigate, currentProject, inputValue])
 
     const handleCancelOnClick = useCallback(() => {
         dispatch(setModalClose('create-task'))
@@ -43,21 +48,57 @@ export const CreateTaskModal = () => {
 
     return (
         <div className={classNames(modalStyles.wrapper, styles.wrapper)}>
-            <form>
-                <input 
-                    type="text"
-                    name="task-name"
-                    value={taskName}
-                    onChange={handleTaskNameOnChange}
-                />
+            <form 
+                onSubmit={handleCreateTaskOnClick}
+                className={styles.form}
+            >
+                <fieldset className={styles.fieldset}>
+                    <div className={styles.inputWrapper}>
+                        <label className={styles.label} htmlFor="title">Title</label>
+                        <input 
+                            className={styles.input}
+                            name="title"
+                            value={inputValue.title}
+                            onChange={handleTaskNameOnChange}
+                        />
+                    </div>
+                    <div className={styles.inputWrapper}>
+                        <label className={styles.label} htmlFor="description">Description</label>
+                        <input 
+                            className={styles.input}
+                            name="description"
+                            value={inputValue.description}
+                            onChange={handleTaskNameOnChange}
+                        />
+                    </div>
+                    <div className={styles.inputWrapper}>
+                        <label className={styles.label} htmlFor="endDate">End date</label>
+                        <input 
+                            type="date" 
+                            name="endDate"
+                            className={styles.input}
+                            value={inputValue.endDate}
+                            onChange={handleTaskNameOnChange}
+                        />
+                    </div>
+                    <div className={styles.inputWrapper}>
+                        <input 
+                            type="file" 
+                            name="files"
+                            className={styles.input}
+                            value={inputValue.files}
+                            onChange={handleTaskNameOnChange}
+                        />
+                    </div>
+                </fieldset>
                 <div className={modalStyles.buttons}>
                     <Button
                         text="Create task"
-                        onClick={handleCreateTaskOnClick}
                     />
                     <Button
                         text="Cancel"
                         onClick={handleCancelOnClick}
+                        type="submit"
                     />
                 </div>
             </form>

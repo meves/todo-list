@@ -11,15 +11,22 @@ export type TaskStatus = 'queue' | 'development' | 'done'
 
 export type Task = {
     projectId: number,
+    projectName: string
     taskId: number,
+    title: string
     description: string
     createdDate: string
     endDate: string
-    timeInProgress: number // in ms
     priority: TaskPriorirty
-    files: File[]
+    files: string[]
     taskStatus: TaskStatus
-    tasks?: Task[]
+    subtasks?: Task[]
+    collapsed: boolean
+}
+
+export type ProjectData = {
+    id: number
+    projectName: string
 }
 
 export type Project = {
