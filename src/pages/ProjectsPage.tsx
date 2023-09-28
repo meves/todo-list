@@ -1,22 +1,27 @@
 import React, { useCallback } from "react";
 import { Layout } from "../components/Layout/Layout";
 import { Button } from "../components/common/Button/Button";
-import { ProjectCards } from "../components/Projects/Cards/Cards";
+import { Projects } from "../components/Projects/Projects/Projects";
 import classNames from "classnames";
 import styles from './Page.module.scss'
 import { ModalWrapper } from "../components/common/Modals/Modal/ModalWrapper";
 import { CreateProjectModal } from "../components/common/Modals/ModalContents/CreateProject/CreateProject";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsCreateNewProjectModalOpen, selectIsDeleteProjectModalOpen, setIsCreateNewProjectModalOpen } from "../store/reducers/modal-reducer";
+import { selectModalOpen, setModalOpen } from "../store/reducers/modal-reducer";
 import { DeleteProjectModal } from "../components/common/Modals/ModalContents/DeleteProject/DeleteProject";
+import { CreateTaskModal } from "../components/common/Modals/ModalContents/CreateTask/CreateTask";
 
 const ProjectsPage = () => {
     const dispatch = useDispatch()
-    const isCreateNewProjectModalOpen = useSelector(selectIsCreateNewProjectModalOpen)
-    const isDeleteProjectModalOpen = useSelector(selectIsDeleteProjectModalOpen)
-
+    
+    const { 
+        "create-project" : isCreateNewProjectModalOpen, 
+        "delete-project" : isDeleteProjectModalOpen,
+        "create-task" : isCreateTaskModalOpen
+    } = useSelector(selectModalOpen)
+    
     const handleAddNewProjectOnClick = useCallback(() => {
-        dispatch(setIsCreateNewProjectModalOpen())
+        dispatch(setModalOpen('create-project'))
     }, [dispatch])
 
     return (
@@ -27,7 +32,7 @@ const ProjectsPage = () => {
                     text="Add new project"
                     onClick={handleAddNewProjectOnClick}
                 />
-                <ProjectCards/>
+                <Projects/>
             </main>
         </Layout>
 
@@ -39,6 +44,11 @@ const ProjectsPage = () => {
         <ModalWrapper
             isModalOpen={isDeleteProjectModalOpen}
         > <DeleteProjectModal/>
+        </ModalWrapper>
+
+        <ModalWrapper
+            isModalOpen={isCreateTaskModalOpen}
+        > <CreateTaskModal/>            
         </ModalWrapper>
         </>
     )

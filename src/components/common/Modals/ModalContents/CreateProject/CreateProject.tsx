@@ -1,11 +1,13 @@
 import React, { ChangeEvent, useCallback, useState } from "react";
-import styles from './CreateProject.module.scss'
 import { Button } from "../../../Button/Button";
 import { Error } from "../../../Error/Error";
 import { useDispatch } from "react-redux";
-import { setIsCreateNewProjectModalClose } from "../../../../../store/reducers/modal-reducer";
+import { setModalClose } from "../../../../../store/reducers/modal-reducer";
 import { setNewProject } from "../../../../../store/reducers/project-reducer";
 import { createId } from "../../../../libs/utils/createId";
+import modalStyles from '../ModalContents.module.scss'
+import styles from './CreateProject.module.scss'
+import classNames from "classnames";
 
 export const CreateProjectModal = () => {
     const dispatch = useDispatch()
@@ -19,7 +21,7 @@ export const CreateProjectModal = () => {
     }, [])
 
     const closeModal = useCallback(() => {
-        dispatch(setIsCreateNewProjectModalClose())
+        dispatch(setModalClose('create-project'))
         setInputValue('')
     }, [dispatch])
 
@@ -33,7 +35,7 @@ export const CreateProjectModal = () => {
     }, [closeModal])
     
     return (
-        <section className={styles.wrapper}>
+        <section className={classNames(modalStyles.wrapper, styles.wrapper)}>
             <input 
                 className={styles.input}
                 value={inputValue}
@@ -42,7 +44,7 @@ export const CreateProjectModal = () => {
                 title='Only the next 50 characters 0-9a-zA-Zа-яА-ЯЁё,./()*+=_!"№;%:? <>-'
             />
             {error ? <Error errorText={error} /> : null}
-            <div className={styles.buttons}>
+            <div className={modalStyles.buttons}>
                 <Button 
                     text="Create project"
                     onClick={handleCreateProjectOnClick}

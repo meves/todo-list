@@ -1,9 +1,11 @@
 import React, { useCallback } from "react";
-import styles from './DeleteProject.module.scss'
 import { Button } from "../../../Button/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsDeleteProjectModalClose } from "../../../../../store/reducers/modal-reducer";
+import { setModalClose } from "../../../../../store/reducers/modal-reducer";
 import { deleteProject, selectCurrentProjectId, setCurrentProjectId } from "../../../../../store/reducers/project-reducer";
+import modalStyles from '../ModalContents.module.scss'
+import styles from './DeleteProject.module.scss'
+import classNames from "classnames";
 
 export const DeleteProjectModal = () => {
     const dispatch = useDispatch()
@@ -14,21 +16,21 @@ export const DeleteProjectModal = () => {
             dispatch(deleteProject(currentProjectId))
             dispatch(setCurrentProjectId(null))
         }
-        dispatch(setIsDeleteProjectModalClose())
+        dispatch(setModalClose('delete-project'))
     }, [dispatch, currentProjectId])
     
     const handleCancelOnClick = useCallback(() => {
-        dispatch(setIsDeleteProjectModalClose())
+        dispatch(setModalClose('delete-project'))
     }, [dispatch])
     
     return (
-        <div className={styles.wrapper}>
+        <div className={classNames(modalStyles.wrapper, styles.wrapper)}>
             <p
                 className={styles.text}
             >Deleting a project cannot be undone. Continue?
             </p>
             
-            <div className={styles.buttons}>
+            <div className={modalStyles.buttons}>
                 <Button
                     text="Delete project"
                     onClick={handleDeleteProjectOnClick}

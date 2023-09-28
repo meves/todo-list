@@ -1,11 +1,11 @@
 import React, { FC, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../common/Button/Button";
-import styles from './Card.module.scss'
+import styles from './ProjectCard.module.scss'
 import { Project } from "../../../store/libs/types";
 import { useDispatch } from "react-redux";
 import { setCurrentProjectId } from "../../../store/reducers/project-reducer";
-import { setIsDeleteProjectModalOpen } from "../../../store/reducers/modal-reducer";
+import { setModalOpen } from "../../../store/reducers/modal-reducer";
 
 type ProjectCardProps = {
     project: Project
@@ -15,7 +15,12 @@ export const ProjectCard: FC<ProjectCardProps> = ({project}) => {
     const dispatch = useDispatch()
 
     const handleDeleteProjectOnClick = useCallback(() => {
-        dispatch(setIsDeleteProjectModalOpen())
+        dispatch(setModalOpen('delete-project'))
+        dispatch(setCurrentProjectId(project.id))
+    }, [dispatch, project.id])
+
+    const handleCreateTaskOnClick = useCallback(() => {
+        dispatch(setModalOpen('create-task'))
         dispatch(setCurrentProjectId(project.id))
     }, [dispatch, project.id])
 
@@ -29,7 +34,8 @@ export const ProjectCard: FC<ProjectCardProps> = ({project}) => {
             <div className={styles.buttons}>
                 <Button 
                     className={styles.button} 
-                    text="Create new task" 
+                    text="Create new task"
+                    onClick={handleCreateTaskOnClick}
                 />
                 <Button 
                     className={styles.button} 
