@@ -11,11 +11,13 @@ import { useSelector } from "react-redux";
 import { selectModalOpen } from "../../store/reducers/modal-reducer";
 import { DeleteTaskModal } from "../../components/common/Modals/ModalContents/DeleteTask/DeleteTask";
 import { NotDeleteTaskModal } from "../../components/common/Modals/ModalContents/NotDeleteTask/NotDeleteTask";
+import { CreateTaskModal } from "../../components/common/Modals/ModalContents/CreateTask/CreateTask";
 
 const TasksPage = () => {
     const {
         "delete-task": isDeleteTaskModalOpen,
-        "not-delete-task": isNotDeleteTaskModalOpen
+        "not-delete-task": isNotDeleteTaskModalOpen,
+        "create-task": isCreateTaskModalOpen
     } = useSelector(selectModalOpen)
     return (
         <>
@@ -27,6 +29,10 @@ const TasksPage = () => {
             </main>
         </Layout>
 
+        <ModalWrapper
+            isModalOpen={isCreateTaskModalOpen}
+        > <CreateTaskModal/>            
+        </ModalWrapper>
         <ModalWrapper
             isModalOpen={isDeleteTaskModalOpen}
         > <DeleteTaskModal/>

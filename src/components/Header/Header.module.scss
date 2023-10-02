@@ -7,6 +7,7 @@
     background-color: var(--header-bg);
     position: sticky;
     top: 0;
+    z-index: 1;
     
     .logo {
         color: var(--white);

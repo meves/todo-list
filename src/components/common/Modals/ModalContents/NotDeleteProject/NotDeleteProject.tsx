@@ -16,7 +16,7 @@ export const NotDeleteProjectModal = () => {
     return (
         <div className={classNames(modalStyles.wrapper, styles.wrapper)}>
             <p className={styles.text}>
-            You cannot delete a project that has unfinished tasks
+            You cannot delete a project that has unfinished tasks.
             </p>
             <div className={styles.buttons}>
                 <Button

@@ -10,9 +10,10 @@ export type TaskPriorirty = 'low' | 'middle' | 'high'
 export type TaskStatus = 'queue' | 'development' | 'done'
 
 export type Task = {
-    projectId: number,
+    projectId: number
     projectName: string
-    taskId: number,
+    parentTaskId: number| null
+    taskId: number
     title: string
     description: string
     createdDate: string

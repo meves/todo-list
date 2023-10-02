@@ -12,7 +12,7 @@ export const DeleteTaskModal = () => {
     const currentTask = useSelector(selectCurrentTask)
 
     const handleDeleteTaskOnClick = useCallback(() => {
-        if (currentTask) {
+        if (currentTask && !currentTask.subtasks) {
             dispatch(deleteTask(currentTask))
         }
         dispatch(setCurrentTask(null))

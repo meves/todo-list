@@ -16,7 +16,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({project}) => {
 
     const handleDeleteProjectOnClick = useCallback(() => {
         const tasksDone = project.tasks?.every(task => task.taskStatus === 'done')
-        if (tasksDone) {
+        if (!project.tasks || tasksDone) {
             dispatch(setModalOpen('delete-project'))
             dispatch(setCurrentProject({id: project.id, projectName: project.projectName}))
         } else {

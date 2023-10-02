@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Button } from "../../../Button/Button";
 import { Error } from "../../../Error/Error";
 import { useDispatch } from "react-redux";
 import { setModalClose } from "../../../../../store/reducers/modal-reducer";
-import { setNewProject } from "../../../../../store/reducers/project-reducer";
+import { setCurrentProject, setNewProject } from "../../../../../store/reducers/project-reducer";
 import { createId } from "../../../../libs/utils/createId";
 import modalStyles from '../ModalContents.module.scss'
 import styles from './CreateProject.module.scss'
@@ -33,6 +33,12 @@ export const CreateProjectModal = () => {
     const handleCancelCreateProjectOnClick = useCallback(() => {
         closeModal()
     }, [closeModal])
+
+    useEffect(() => {
+        return () => {
+            dispatch(setCurrentProject(null))
+        }
+    }, [dispatch])
     
     return (
         <section className={classNames(modalStyles.wrapper, styles.wrapper)}>

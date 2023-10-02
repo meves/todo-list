@@ -1,17 +1,19 @@
-import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import modalStyles from '../ModalContents.module.scss'
 import styles from './CreateTask.module.scss'
 import classNames from "classnames";
 import { Button } from "../../../Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalClose } from "../../../../../store/reducers/modal-reducer";
-import { selectCurrentProject, setNewTask } from "../../../../../store/reducers/project-reducer";
+import { selectCurrentProject, selectCurrentTask, setCurrentProject, setCurrentTask, setNewTask } from "../../../../../store/reducers/project-reducer";
 import { ProjectData, Task, TaskPriorirty, TaskStatus } from "../../../../../store/libs/types";
 import { useNavigate } from "react-router-dom";
 
 export const CreateTaskModal = () => {
     const dispatch = useDispatch()
     const currentProject = useSelector(selectCurrentProject) as ProjectData
+    const currentTask = useSelector(selectCurrentTask)
+
     const navigate = useNavigate()
 
     const [inputValue, setInputValue] = useState({title: '', description: '', endDate: '', files: []})
@@ -27,6 +29,7 @@ export const CreateTaskModal = () => {
         const newTask: Task = {
             projectId: currentProject.id,
             projectName: currentProject.projectName,
+            parentTaskId: currentTask?.taskId ? currentTask.taskId : null,
             taskId: Date.now(),
             title: inputValue.title,
             description: inputValue.description,
@@ -40,10 +43,17 @@ export const CreateTaskModal = () => {
         dispatch(setNewTask(newTask))
         dispatch(setModalClose('create-task'))
         navigate('/tasks')
-    }, [dispatch, navigate, currentProject, inputValue])
+    }, [dispatch, navigate, currentProject, currentTask, inputValue])
 
     const handleCancelOnClick = useCallback(() => {
         dispatch(setModalClose('create-task'))
+    }, [dispatch])
+
+    useEffect(() => {
+        return () => {
+            dispatch(setCurrentProject(null))
+            dispatch(setCurrentTask(null))
+        }
     }, [dispatch])
 
     return (
